@@ -27,22 +27,25 @@
         /* Islamic Calligraphy */
         .islamic-calligraphy {
             font-family: 'Times New Roman', serif;
-            font-size: 25px;
+            font-size: 2vw; /* Scales with screen width */
             color: #0db607;
-            margin: 20px 0;
+            margin: 20px 5%; /* Added margin for small screens */
             position: relative;
             text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
-
+        
+        /* Top Left Text */
         .top-left-text {
             position: absolute;
-            top: 5px;
+            top: 10px;
             left: 10px;
-            font-size: 30px;
+            font-size: 1.5rem; /* Scales well on all screens */
             font-weight: bold;
-            color: #ffffff; /* Bootstrap Primary Color */
-            font-family: 'Dancing Script', cursive; 
-            margin-left: 70px;
+            color: #ffffff;
+            font-family: 'Dancing Script', cursive;
         }
 
         .top-left-text a {
@@ -153,7 +156,6 @@
             margin-top: 20px;
             box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
             width: 100%;
-            max-width: 600px;
             text-align: center;
             margin-left: auto;
             margin-right: auto;
@@ -327,12 +329,26 @@
                 font-size: 1.1rem;
             }
             .row {
-            flex-direction: column;
+                flex-direction: column;
+            }
+            .col-6 {
+                width: 100%;
+            }
         }
-        .col-6 {
-            width: 100%;
+        @media (max-width: 600px) {
+            .islamic-calligraphy {
+                font-size: 4vw; /* Increases text size for readability */
+                margin: 10px 2%;
+            }
+        
+            .top-left-text {
+                font-size: 1.2rem; /* Adjusts text size on small screens */
+                left: 5px;
+                top: 5px;
+            }
         }
-        }
+        
+        
     </style>
 </head>
 <body>
@@ -344,9 +360,9 @@
         <span class="crescent-moon-star">
             <i class="fa-solid fa-star-and-crescent"></i>
         </span>
-        <span>بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ (Bismillah ir-Rahman ir-Rahim)</span> <!-- Bismillah Text -->
+        <span>بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ (Bismillah ir-Rahman ir-Rahim)</span>
         <br>
-        <span>رمضان كريم (Ramadan Kareem)</span> <!-- Meaning: Ramadan Kareem (Generous Ramadan) -->
+        <span>رمضان كريم (Ramadan Kareem)</span>
     </div>
 
     <div class="container mt-5">
@@ -386,7 +402,7 @@
                 </select>
     
                 <!-- Today's Sehri & Iftar -->
-                <div class="today-times">
+                <div class="today-times col-md-8">
                     <h3 style="color: white;">Today's Sehri & Iftar</h3>
                     <div class="row">
                         <div class="col-6">
