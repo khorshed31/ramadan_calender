@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ramadan Calendar</title>
+    <!-- Font Awesome for Icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEJXQG4t6f5y9h4M5qXVRb6FQKTq2P3d6d8gGmEJwWlWlXqxM2hTZpxx4w7ZW" crossorigin="anonymous">
+    <style>
+        /* General Styling */
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+            color: #ffffff;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+
+        h2, h3 {
+            color: #f1c40f;
+            font-family: 'Georgia', serif;
+        }
+
+        /* Islamic Calligraphy */
+        .islamic-calligraphy {
+            font-family: 'Times New Roman', serif;
+            font-size: 25px;
+            color: #0db607;
+            margin: 20px 0;
+            position: relative;
+            text-align: center;
+        }
+
+        .top-left-text {
+            position: absolute;
+            top: 5px;
+            left: 10px;
+            font-size: 30px;
+            font-weight: bold;
+            color: #ffffff; /* Bootstrap Primary Color */
+            font-family: 'Dancing Script', cursive; 
+            margin-left: 70px;
+        }
+
+        .top-left-text a {
+            text-decoration: none; /* Removes the underline */
+            color: white; /* Makes the text color white */
+        }
+
+        .crescent-moon-star {
+            font-size: 50px;
+            color: #0db607;
+            display: inline-block;
+            vertical-align: middle;
+        }
+
+        /* Decorative Islamic Borders */
+        .decorative-border {
+            border: 3px solid #f1c40f;
+            padding: 10px;
+            border-radius: 10px;
+            display: inline-block;
+            box-shadow: 0 0 10px rgba(241, 196, 15, 0.8);
+            margin-bottom: 15px;
+        }
+
+        /* Mosque Silhouette */
+        .mosque-silhouette {
+            width: 100%;
+            height: 200px;
+            background-color: #f1c40f;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 50px;
+            font-size: 100px;
+            color: #ffffff;
+        }
+
+        .mosque-silhouette i {
+            font-size: 120px;
+            color: #ffffff;
+        }
+
+        /* Minar Icon using Font Awesome */
+        .minar-top {
+            font-size: 40px;
+            color: #f1c40f;
+            margin-bottom: 10px;
+        }
+
+        /* Select Dropdown Styling */
+        select {
+            font-size: 16px;
+            padding: 10px;
+            width: 250px;
+            margin: 20px auto;
+            display: block;
+            border-radius: 5px;
+            border: none;
+            background-color: #34495e;
+            color: #ffffff;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+            transition: 0.3s ease;
+        }
+
+        select:hover {
+            background-color: #2c3e50;
+            cursor: pointer;
+        }
+
+        /* Table Styling */
+        table {
+            width: 90%;
+            margin: 30px auto;
+            border-collapse: collapse;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 0 15px rgba(241, 196, 15, 0.7);
+        }
+
+        th, td {
+            padding: 12px 15px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: #ffffff;
+        }
+
+        th {
+            background-color: rgba(241, 196, 15, 0.8);
+            color: #000;
+            font-weight: bold;
+            font-family: 'Georgia', serif;
+        }
+
+        tr:nth-child(even) {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        tr:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .today-times {
+            background: linear-gradient(135deg, #2c5364, #203a43);
+            color: #ffffff;
+            border-radius: 15px;
+            padding: 30px;
+            margin-top: 20px;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+            width: 100%;
+            max-width: 600px;
+            text-align: center;
+            margin-left: auto;
+            margin-right: auto;
+            position: relative;
+            font-family: 'Arial', sans-serif;
+        }
+
+        .today-times h3 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #f1c40f;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .today-times p {
+            font-size: 1.25rem;
+            margin: 15px 0;
+            font-weight: 500;
+        }
+
+        .today-times p#sehriTime {
+            color: #27ae60; /* Green for Sehri */
+        }
+
+        .today-times p#iftarTime {
+            color: #fff823; /* Red for Iftar */
+        }
+
+        /* Decorative Element (Icon) */
+        .today-times::before {
+            content: "🌙"; /* Crescent moon symbol */
+            font-size: 2rem;
+            position: absolute;
+            top: 0px;
+            right: 3px;
+            color: #f1c40f;
+        }
+
+        /* Grid Styling */
+        .row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* Column Styling */
+        .col-6 {
+            width: 48%; /* Each column takes half the space */
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        /* Date & Time Styling */
+        #todayDate {
+            color: #f1c40f;
+            font-size: 1.1rem;
+        }
+
+        #ramadanDay {
+            color: #e67e22;
+            font-size: 1.1rem;
+        }
+
+        #sehriTime {
+            color: #27ae60;
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+
+        #iftarTime {
+            color: #fff823;
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+
+        .dua-box {
+            background: #e0f7fa; /* Light Blue Background */
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+            margin: 10px 70px;
+        }
+
+        .dua-text {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #008000;
+            font-family: "Amiri", serif;
+        }
+
+        .dua-meaning {
+            font-size: 0.9em;
+            color: #555;
+        }
+
+        .dua-bangla {
+            font-size: 13px;
+            color: #000;
+            font-weight: bold;
+            margin-top: 5px;
+        }
+
+        .dua-transliteration {
+            font-size: 0.85em;
+            color: #007bff;
+            font-style: italic;
+            margin-top: 5px;
+        }
+
+        .today-times h3 {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .today-times p {
+            font-size: 1.2em;
+            margin: 5px 0;
+        }
+
+        footer {
+            background-color: #2c3e50;
+            color: #ffffff;
+            padding: 20px;
+            text-align: center;
+            font-size: 14px;
+            margin-top: 50px;
+        }
+
+        footer a {
+            color: #f1c40f;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        .highlight-today {
+            background-color: rgb(62 147 0 / 80%) !important;
+            color: #000 !important;
+            font-weight: bold;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            table {
+                width: 100%;
+                font-size: 14px;
+            }
+
+            select {
+                width: 100%;
+            }
+
+            td {
+                padding: 10px;
+            }
+            .today-times {
+                padding: 20px;
+            }
+            .today-times h3 {
+                font-size: 1.2rem;
+            }
+            .today-times p {
+                font-size: 1.1rem;
+            }
+            .row {
+            flex-direction: column;
+        }
+        .col-6 {
+            width: 100%;
+        }
+        }
+    </style>
+</head>
+<body>
+    <div class="islamic-calligraphy">
+        <div class="top-left-text">
+            <a href="https://khorshed31.github.io/portfolio/" target="_blank">Khorshed Alom</a>
+        </div>
+        
+        <span class="crescent-moon-star">
+            <i class="fa-solid fa-star-and-crescent"></i>
+        </span>
+        <span>بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ (Bismillah ir-Rahman ir-Rahim)</span> <!-- Bismillah Text -->
+        <br>
+        <span>رمضان كريم (Ramadan Kareem)</span> <!-- Meaning: Ramadan Kareem (Generous Ramadan) -->
+    </div>
+
+    <div class="container mt-5">
+        <div class="row">
+            <!-- Left Column for Ramadan Dua -->
+            <div class="col-md-2 text-center mb-4">
+                <div class="dua-box p-3 rounded shadow-sm">
+                    <p class="dua-text display-6">اللهم بلغنا رمضان</p>
+                    <p class="dua-meaning"><strong>O Allah, let us reach Ramadan</strong></p>
+                    <p class="dua-bangla">হে আল্লাহ, আমাদের রমজান পর্যন্ত পৌঁছাতে দিন</p>
+                    <p class="dua-transliteration">আল্লাহুম্মা বল্লিগনা রমযান</p>
+                </div>
+            </div>
+    
+            <!-- Center Column for District Selection and Sehri & Iftar Timings -->
+            <div class="col-md-8 text-center mb-4">
+                <h2>Select Your District:</h2>
+                <select id="district" onchange="updateTimes()">
+                    <option value="0">Dhaka (Default)</option>
+                    <option value="1">Madaripur, Gaibandha, Shariatpur, Barguna</option>
+                    <option value="-1">Gazipur, Mymensingh, Chandpur</option>
+                    <option value="2">Sirajganj, Faridpur, Patuakhali, Manikganj</option>
+                    <option value="-2">Narsingdi, Kishoreganj, Noakhali, Lakshmipur</option>
+                    <option value="3">Gopalganj, Bogura, Pirojpur, Bagerhat</option>
+                    <option value="-3">Cumilla, Brahmanbaria, Netrokona, Feni</option>
+                    <option value="4">Rajshahi, Khulna, Naogaon, Gaibandha</option>
+                    <option value="-4">Cox’s Bazar, Habiganj, Sunamganj</option>
+                    <option value="5">Kushtia, Pabna, Rangpur, Thakurgaon</option>
+                    <option value="-5">Chattogram, Sylhet, Moulvibazar</option>
+                    <option value="6">Jhenaidah, Satkhira, Joypurhat, Natore</option>
+                    <option value="-6">Khagrachari, Bandarban, Rangamati</option>
+                    <option value="7">Meherpur, Rajbari, Nilphamari, Dinajpur</option>
+                    <option value="-7">Rangamati, Bandarban</option>
+                    <option value="8">Panchagarh</option>
+                    <option value="-8">Rangamati</option>
+                    <option value="9">Chapainawabganj, Thakurgaon</option>
+                </select>
+    
+                <!-- Today's Sehri & Iftar -->
+                <div class="today-times">
+                    <h3 style="color: white;">Today's Sehri & Iftar</h3>
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="date-info">
+                                <p id="todayDate">📅 Today: --</p>
+                                <p id="ramadanDay">🕌 Ramadan Day: --</p>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="time-info">
+                                <p id="sehriTime">🌙 Sehri: --:-- AM</p>
+                                <p id="iftarTime">🌅 Iftar: --:-- PM</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    
+            <!-- Right Column for Ramadan Dua -->
+            <div class="col-md-2 text-center mb-4">
+                <div class="dua-box p-3 rounded shadow-sm">
+                    <p class="dua-text display-6">اللهم اعني على صيامه وقيامه</p>
+                    <p class="dua-meaning"><strong>O Allah, help me in fasting & praying</strong></p>
+                    <p class="dua-bangla">হে আল্লাহ, আমাকে রোযা ও নামাজে সহায়তা করুন</p>
+                    <p class="dua-transliteration">আল্লাহুম্মা আ'ইননি আলা সিয়ামিহি ওয়া কিয়ামিহি</p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <h2 id="calendarHeading">Ramadan Calendar - <span id="selectedCity" style="color: #07ff03;">Dhaka</span></h2>
+
+    <div class="row g-4">
+        <!-- Rahmah Phase -->
+        <div class="col-md-4">
+            <div class="rahmah-phase decorative-border">
+                <div class="minar-top">
+                    <i class="fas fa-mosque"></i>
+                </div>
+                <h3>Rahmah (Mercy) - Days 1-10</h3>
+                <table class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th>Day</th>
+                            <th>Date</th>
+                            <th>Day of Week</th>
+                            <th>Sehri (AM)</th>
+                            <th>Iftar (PM)</th>
+                        </tr>
+                    </thead>
+                    <tbody id="rahmahBody"></tbody>
+                </table>
+            </div>
+        </div>
+        
+        <!-- Maghfirah Phase -->
+        <div class="col-md-4">
+            <div class="maghfirah-phase decorative-border">
+                <div class="minar-top">
+                    <i class="fas fa-mosque"></i>
+                </div>
+                <h3>Maghfirah (Forgiveness) - Days 11-20</h3>
+                <table class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th>Day</th>
+                            <th>Date</th>
+                            <th>Day of Week</th>
+                            <th>Sehri (AM)</th>
+                            <th>Iftar (PM)</th>
+                        </tr>
+                    </thead>
+                    <tbody id="maghfirahBody"></tbody>
+                </table>
+            </div>
+        </div>
+        
+        <!-- Najah Phase -->
+        <div class="col-md-4">
+            <div class="najah-phase decorative-border">
+                <div class="minar-top">
+                    <i class="fas fa-mosque"></i>
+                </div>
+                <h3>Najah (Salvation) - Days 21-30</h3>
+                <table class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th>Day</th>
+                            <th>Date</th>
+                            <th>Day of Week</th>
+                            <th>Sehri (AM)</th>
+                            <th>Iftar (PM)</th>
+                        </tr>
+                    </thead>
+                    <tbody id="najahBody"></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>Designed and Developed by Md Khorshed Alom</p>
+        <p>Visit Here <a href="https://khorshed31.github.io/portfolio/" target="_blank">Khorshed</a></p>
+    </footer>
+
+    <!-- Bootstrap JS and dependencies -->
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz4fnFO9gybPz2Y09gFT4wE0iD6k7Ff5Dle6vDlYjeYP1dA0kxfz5FJN4w" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js" integrity="sha384-pzjw8f+ua7Kw1TIq0D6cuD7Pj5+NjfwiZ1b9zA+DQxHfFn2gNYuqGh8wzMnBxgd9" crossorigin="anonymous"></script>
+
+    <script>
+        // Dhaka's Sehri & Iftar Timings
+        const dhakaTimings = [
+            ["04:59", "06:05"], ["04:58", "06:05"], ["04:57", "06:06"],
+            ["04:56", "06:06"], ["04:56", "06:06"], ["04:55", "06:07"],
+            ["04:54", "06:07"], ["04:53", "06:08"], ["04:52", "06:08"],
+            ["04:51", "06:09"], ["04:50", "06:09"], ["04:49", "06:10"],
+            ["04:48", "06:10"], ["04:47", "06:10"], ["04:46", "06:11"],
+            ["04:45", "06:11"], ["04:44", "06:12"], ["04:43", "06:12"],
+            ["04:42", "06:12"], ["04:41", "06:13"], ["04:40", "06:13"],
+            ["04:39", "06:14"], ["04:38", "06:14"], ["04:37", "06:14"],
+            ["04:36", "06:15"], ["04:35", "06:15"], ["04:34", "06:16"],
+            ["04:32", "06:16"], ["04:31", "06:16"], ["04:30", "06:17"]
+        ];
+
+        // Function to adjust Sehri & Iftar timings based on district
+        function adjustTime(time, adjustment) {
+            let [hours, minutes] = time.split(":").map(Number);
+            minutes += adjustment;
+            if (minutes >= 60) { hours += 1; minutes -= 60; }
+            if (minutes < 0) { hours -= 1; minutes += 60; }
+            return `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}`;
+        }
+
+        // Function to update Sehri & Iftar times based on selected district
+        function updateTimes() {
+            let districtValue = parseInt(document.getElementById("district").value);
+            let selectedCityText = document.getElementById("selectedCity");
+            
+            let rahmahBody = document.getElementById("rahmahBody");
+            let maghfirahBody = document.getElementById("maghfirahBody");
+            let najahBody = document.getElementById("najahBody");
+
+            const cityNames = {
+                "0": "Dhaka", "1": "Madaripur, Gaibandha, Shariatpur, Barguna",
+                "-1": "Gazipur, Mymensingh, Chandpur", "2": "Sirajganj, Faridpur, Patuakhali, Manikganj",
+                "-2": "Narsingdi, Kishoreganj, Noakhali, Lakshmipur", "3": "Gopalganj, Bogura, Pirojpur, Bagerhat",
+                "-3": "Cumilla, Brahmanbaria, Netrokona, Feni", "4": "Rajshahi, Khulna, Naogaon, Gaibandha",
+                "-4": "Cox’s Bazar, Habiganj, Sunamganj", "5": "Kushtia, Pabna, Rangpur, Thakurgaon",
+                "-5": "Chattogram, Sylhet, Moulvibazar", "6": "Jhenaidah, Satkhira, Joypurhat, Natore",
+                "-6": "Khagrachari, Bandarban, Rangamati", "7": "Meherpur, Rajbari, Nilphamari, Dinajpur",
+                "-7": "Rangamati, Bandarban", "8": "Panchagarh", "-8": "Rangamati",
+                "9": "Chapainawabganj, Thakurgaon"
+            };
+
+            // Update Selected City
+            selectedCityText.textContent = cityNames[districtValue] || "Unknown";
+
+            rahmahBody.innerHTML = "";
+            maghfirahBody.innerHTML = "";
+            najahBody.innerHTML = "";
+
+            const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+
+            let today = new Date();
+            let ramadanStartDate = new Date(2025, 2, 2); // Ramadan starts on March 2, 2025
+            let dayIndex = Math.floor((today - ramadanStartDate) / (1000 * 60 * 60 * 24));
+
+            for (let i = 0; i < dhakaTimings.length; i++) {
+                let date = new Date(2025, 2, i + 2);
+                let dayOfWeek = days[date.getDay()];
+                let sehri = adjustTime(dhakaTimings[i][0], districtValue);
+                let iftar = adjustTime(dhakaTimings[i][1], districtValue);
+
+                let isToday = (dayIndex === i);
+
+                let rowHTML = `<tr class="${isToday ? 'highlight-today' : ''}">
+                    <td>${i + 1}</td>
+                    <td>${date.getDate()} March</td>
+                    <td>${dayOfWeek}</td>
+                    <td>${sehri}</td>
+                    <td>${iftar}</td>
+                </tr>`;
+
+                if (i < 10) {
+                    rahmahBody.innerHTML += rowHTML;
+                } else if (i >= 10 && i < 20) {
+                    maghfirahBody.innerHTML += rowHTML;
+                } else {
+                    najahBody.innerHTML += rowHTML;
+                }
+            }
+
+            let sehriTime = document.getElementById("sehriTime");
+            let iftarTime = document.getElementById("iftarTime");
+
+            if (dayIndex >= 0 && dayIndex < dhakaTimings.length) {
+                sehriTime.textContent = `🌙 Sehri: ${adjustTime(dhakaTimings[dayIndex][0], districtValue)} AM`;
+                iftarTime.textContent = `🌅 Iftar: ${adjustTime(dhakaTimings[dayIndex][1], districtValue)} PM`;
+            } else {
+                sehriTime.textContent = "🌙 Sehri: --:-- AM";
+                iftarTime.textContent = "🌅 Iftar: --:-- PM";
+            }
+        }
+
+        // Run updateTimes on page load
+        window.onload = updateTimes;
+
+    </script>
+</body>
+</html>
