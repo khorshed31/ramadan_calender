@@ -397,62 +397,6 @@
             document.getElementById("iftarCountdown").textContent = "🌅 Iftar Countdown: Ramadan Not Active";
         }
     }
-
-    // Function to request notification permission
-    function requestNotificationPermission() {
-        if ("Notification" in window) {
-            Notification.requestPermission().then((permission) => {
-                if (permission === "granted") {
-                    console.log("Notification permission granted.");
-                }
-            });
-        }
-    }
-
-    // Function to show notifications
-    function showNotification(title, message) {
-        if (Notification.permission === "granted") {
-            new Notification(title, {
-                body: message,
-                icon: "https://cdn-icons-png.flaticon.com/512/2913/2913206.png" // Replace with your icon
-            });
-        }
-    }
-
-    // Function to schedule notifications
-    function scheduleNotifications(sehriTime, iftarTime) {
-        function scheduleSingleNotification(targetTime, label) {
-            let [hours, minutes] = targetTime.split(":").map(Number);
-            let now = new Date();
-            let target = new Date(now.getFullYear(), now.getMonth(), now.getDate(), hours, minutes, 0);
-
-            // Define times to send notifications (20, 10, 5 minutes before and exactly at time)
-            const timeOffsets = [20, 10, 5];
-
-            timeOffsets.forEach((offset) => {
-                let notificationTime = new Date(target.getTime() - offset * 60 * 1000);
-                let timeDifference = notificationTime - now;
-
-                if (timeDifference > 0) {
-                    setTimeout(() => {
-                        showNotification(label, `${offset} minutes left for ${label}!`);
-                    }, timeDifference);
-                }
-            });
-            // Notify when the time is exactly over
-            let timeDifferenceZero = target - now;
-            if (timeDifferenceZero > 0) {
-                setTimeout(() => {
-                    showNotification(label, `${label} Time is Over!`);
-                }, timeDifferenceZero);
-            }
-        }
-
-        // Schedule notifications for Sehri and Iftar
-        scheduleSingleNotification(sehriTime, "Sehri");
-        scheduleSingleNotification(iftarTime, "Iftar");
-    }
-
     // Modify updateTodayCountdown to include notifications
     function updateTodayCountdown() {
         let today = new Date();
@@ -477,7 +421,6 @@
 
     // Request permission on page load
     window.onload = function () {
-        requestNotificationPermission();
         updateTodayInfo();
         updateTimes();
         updateTodayCountdown();
