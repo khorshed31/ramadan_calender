@@ -60,9 +60,7 @@ document.getElementById("downloadPDF").addEventListener("click", function () {
             let rowData = [];
             let cells = row.querySelectorAll("td, th");
             cells.forEach(cell => rowData.push(cell.innerText.trim()));
-            if (rowIndex > 0) {  // Skip the first row if it's a header
-                tableData.push(rowData);
-            }
+            tableData.push(rowData);
         });
 
         pdf.autoTable({
